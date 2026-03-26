@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
 
 function App() {
-  return (
-    <div className="p-6">
-      <Button>Teste ShadCN 🚀</Button>
-    </div>
-  );
+  return <Button>Web App</Button>;
 }
 
 export default App;
