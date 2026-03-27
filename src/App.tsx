@@ -1,7 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { RouterProvider } from "react-router-dom";
+import { routes } from "./routes";
+import { ReactQueryProvider } from "./providers";
 
 function App() {
-  return <Button>Web App</Button>;
+  return (
+    <ReactQueryProvider>
+      <RouterProvider router={routes} />
+    </ReactQueryProvider>
+  );
 }
 
-export default App;
+export { App };
