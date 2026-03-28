@@ -11,25 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { PersonsDialog } from "./components";
 import type { PersonsDTO } from "@/models/Persons";
+import { useGetPersonsQuery, useDeletePersonMutation } from "@/services";
 
 const Persons = () => {
-  const persons: PersonsDTO[] = [
-    {
-      id: 1,
-      name: "Nathan",
-      age: 30,
-    },
-    {
-      id: 2,
-      name: "Camila",
-      age: 30,
-    },
-  ];
+  const { data: persons, error } = useGetPersonsQuery();
+  console.log(error);
 
-  const [filterValue, setFilterValue] = useState<string>();
   const [openPersonDialog, setOpenPersonDialog] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<PersonsDTO | null>(null);
   const [deletePersonDialog, setDeletePersonDialog] = useState<boolean>(false);
+
+  const deleteMutation = useDeletePersonMutation();
 
   return (
     <div className="space-y-6 h-full w-full flex flex-col">
@@ -38,14 +30,6 @@ const Persons = () => {
           <h1 className="text-2xl font-bold text-gray-800">Pessoas</h1>
           <span className="text-gray-600">Lista de pessoas cadastradas</span>
         </div>
-
-        <input
-          type="text"
-          value={filterValue}
-          onChange={(e) => setFilterValue(e.target.value)}
-          placeholder="Buscar pessoa por nome"
-          className="px-3 py-2 border border-gray-300 rounded w-64"
-        />
       </div>
 
       <div className="flex w-full justify-end">
@@ -110,7 +94,7 @@ const Persons = () => {
           </tbody>
         </table>
       </div>
-      {persons.length == 0 && (
+      {persons?.length == 0 && (
         <div className="flex flex-col items-center justify-center top-1/2 text-center h-full w-full">
           <MagnifyingGlassIcon
             size={150}
@@ -140,10 +124,23 @@ const Persons = () => {
           </DialogHeader>
           <DialogFooter>
             <div className="flex gap-2 justify-end p-2 w-full">
-              <button className="flex px-2 py-1 bg-yellow-500 hover:bg-yellow-600 rounded transition hover:text-white">
+              <button
+                className="flex px-2 py-1 bg-yellow-500 hover:bg-yellow-600 rounded transition hover:text-white"
+                onClick={() => setDeletePersonDialog(false)}
+              >
                 Cancelar
               </button>
-              <button className="flex px-2 py-1 bg-red-500 hover:bg-red-600 rounded transition hover:text-white">
+              <button
+                className="flex px-2 py-1 bg-red-500 hover:bg-red-600 rounded transition hover:text-white"
+                onClick={() => {
+                  if (selectedPerson) {
+                    deleteMutation.mutate(String(selectedPerson.id));
+                    setDeletePersonDialog(false);
+                    setSelectedPerson(null);
+                  }
+                }}
+                disabled={deleteMutation.isPending}
+              >
                 Excluir
               </button>
             </div>

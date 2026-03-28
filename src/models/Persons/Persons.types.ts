@@ -4,4 +4,6 @@ type PersonsDTO = {
   age: number;
 };
 
-export type { PersonsDTO };
+type GetPersonsResponseDTO = PersonsDTO;
+
+export type { PersonsDTO, GetPersonsResponseDTO };

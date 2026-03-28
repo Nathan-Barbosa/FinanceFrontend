@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { personSchema } from "../Persons.schemas";
 import type { PersonFormData } from "../Persons.types";
+import { usePostPersonQuery, usePutPersonQuery } from "@/services";
 
 const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
   const isEditing = !!person;
@@ -36,8 +37,19 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
     });
   }, [person, form]);
 
+  const createMutation = usePostPersonQuery();
+  const updateMutation = usePutPersonQuery();
+
   const onSubmit = (data: PersonFormData) => {
-    console.log(data);
+    if (isEditing && person) {
+      updateMutation.mutate({
+        id: String(person.id),
+        payload: data,
+      });
+    } else {
+      createMutation.mutate(data);
+    }
+
     onOpenChange(false);
   };
 
@@ -67,13 +79,19 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
           <DialogFooter>
             <Button
               type="button"
-              variant="outline"
+              className="flex px-2 py-1 bg-yellow-500 hover:bg-yellow-600 rounded transition hover:text-white"
               onClick={() => onOpenChange(false)}
             >
               Cancelar
             </Button>
 
-            <Button type="submit">{isEditing ? "Salvar" : "Criar"}</Button>
+            <Button
+              type="submit"
+              className="flex px-2 py-1 bg-green-500 hover:bg-green-600 rounded transition hover:text-white"
+              disabled={createMutation.isPending || updateMutation.isPending}
+            >
+              {isEditing ? "Salvar" : "Criar"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
