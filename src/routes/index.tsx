@@ -4,6 +4,9 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { BaseLayout } from "../layout";
 import { Home } from "@/views/Home";
 import { ROUTES } from "@/constants";
+import { Persons } from "@/views";
+import { Categories } from "@/views/Categories";
+import { Transactions } from "@/views/Transactions";
 
 const routes = createBrowserRouter([
   {
@@ -15,6 +18,18 @@ const routes = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+          },
+          {
+            path: ROUTES.PERSONS,
+            element: <Persons />,
+          },
+          {
+            path: ROUTES.CATEGORIES,
+            element: <Categories />,
+          },
+          {
+            path: ROUTES.TRANSACTIONS,
+            element: <Transactions />,
           },
         ],
       },

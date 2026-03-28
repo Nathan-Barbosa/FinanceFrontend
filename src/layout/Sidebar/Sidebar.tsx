@@ -1,6 +1,13 @@
 import { ROUTES } from "@/constants";
 import { NavLink } from "react-router-dom";
-import { CaretLeftIcon, ChartBarIcon, ListIcon } from "@phosphor-icons/react";
+import {
+  CaretLeftIcon,
+  ChartBarIcon,
+  CreditCardIcon,
+  ListIcon,
+  PersonIcon,
+  WalletIcon,
+} from "@phosphor-icons/react";
 import imglogo from "../../assets/finances-logo.png";
 import { useState } from "react";
 
@@ -14,11 +21,26 @@ const Sidebar = () => {
       label: "Home",
       icon: <ChartBarIcon size={20} />,
     },
+    {
+      to: ROUTES.PERSONS,
+      label: "Pessoas",
+      icon: <PersonIcon size={20} />,
+    },
+    {
+      to: ROUTES.CATEGORIES,
+      label: "Categorias",
+      icon: <WalletIcon size={20} />,
+    },
+    {
+      to: ROUTES.TRANSACTIONS,
+      label: "Transações",
+      icon: <CreditCardIcon size={20} />,
+    },
   ];
 
   return (
     <aside
-      className={`bg-blue-400 text-white h-screen p-4 ${isOpen ? "w-60" : "w-20"} transition-all duration-300`}
+      className={`bg-blue-400 h-screen p-4 ${isOpen ? "w-60" : "w-20"} transition-all duration-300`}
     >
       <div className={`flex ${isOpen ? "justify-end" : "justify-center"} mb-2`}>
         <button
@@ -36,12 +58,12 @@ const Sidebar = () => {
       )}
 
       <nav>
-        <ul className="flex flex-col gap-2 text-black hover:text-white">
+        <ul className="flex flex-col gap-2 text-black">
           {navItems.map(({ to, label, icon }) => (
             <li key={to}>
               <NavLink to={to} className="block p-2 rounded bg-blue-500">
                 <div
-                  className={`flex gap-2 ${isOpen ? "justify-start" : "justify-center"}`}
+                  className={`flex gap-2 hover:text-white ${isOpen ? "justify-start" : "justify-center"}`}
                 >
                   {icon}
                   {isOpen && <span>{label}</span>}
