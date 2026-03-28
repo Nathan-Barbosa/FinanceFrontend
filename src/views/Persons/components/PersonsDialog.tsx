@@ -17,6 +17,23 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
   const [name, setName] = useState(person?.name ?? "");
   const [age, setAge] = useState(person ? String(person.age) : "");
 
+  const handleSubmit = () => {
+    const data = {
+      name,
+      age: Number(age),
+    };
+
+    console.log(data);
+
+    onOpenChange(false);
+  };
+
+  const handleClose = () => {
+    onOpenChange(false);
+    setName("");
+    setAge("");
+  };
+
   return (
     <Dialog key={person?.id ?? "new"} open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -43,11 +60,11 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={handleClose}>
             Cancelar
           </Button>
 
-          <Button onClick={() => console.log({ name, age })}>
+          <Button onClick={handleSubmit}>
             {isEditing ? "Salvar" : "Criar"}
           </Button>
         </DialogFooter>
