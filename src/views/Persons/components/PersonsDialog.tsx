@@ -5,37 +5,44 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import type { PersonsDialogProps } from "./PersonsDialog.types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { personSchema } from "../Persons.schemas";
+import type { PersonFormData } from "../Persons.types";
 
 const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
   const isEditing = !!person;
 
-  const [name, setName] = useState(person?.name ?? "");
-  const [age, setAge] = useState(person ? String(person.age) : "");
+  const form = useForm<PersonFormData>({
+    resolver: zodResolver(personSchema),
+    defaultValues: {
+      name: person?.name ?? "",
+      age: person?.age ?? 0,
+    },
+  });
 
-  const handleSubmit = () => {
-    const data = {
-      name,
-      age: Number(age),
-    };
+  useEffect(() => {
+    form.reset({
+      name: person?.name ?? "",
+      age: person?.age ?? 0,
+    });
+  }, [person, form]);
 
+  const onSubmit = (data: PersonFormData) => {
     console.log(data);
-
     onOpenChange(false);
-  };
-
-  const handleClose = () => {
-    onOpenChange(false);
-    setName("");
-    setAge("");
   };
 
   return (
-    <Dialog key={person?.id ?? "new"} open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -43,31 +50,32 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label>Nome</Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input {...form.register("name")} />
           </div>
 
           <div className="space-y-2">
             <Label>Idade</Label>
             <Input
               type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              {...form.register("age", { valueAsNumber: true })}
             />
           </div>
-        </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
-            Cancelar
-          </Button>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancelar
+            </Button>
 
-          <Button onClick={handleSubmit}>
-            {isEditing ? "Salvar" : "Criar"}
-          </Button>
-        </DialogFooter>
+            <Button type="submit">{isEditing ? "Salvar" : "Criar"}</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
