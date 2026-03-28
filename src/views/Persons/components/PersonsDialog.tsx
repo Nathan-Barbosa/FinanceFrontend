@@ -9,53 +9,46 @@ import type { PersonsDialogProps } from "./PersonsDialog.types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
-const PersonsDialog = ({ ...props }: PersonsDialogProps) => {
-  const isEditing = !!props.person;
+const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
+  const isEditing = !!person;
+
+  const [name, setName] = useState(person?.name ?? "");
+  const [age, setAge] = useState(person ? String(person.age) : "");
 
   return (
-    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
+    <Dialog key={person?.id ?? "new"} open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {isEditing
-              ? `Editar ${props.person?.name}`
-              : "Cadastrar nova pessoa"}
+            {isEditing ? `Editar ${person?.name}` : "Cadastrar nova pessoa"}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
-          <div className="space-y-2 flex flex-col gap-2 ">
-            <Label htmlFor="name">Nome</Label>
-            <Input
-              defaultValue={props.person?.name}
-              placeholder="Digite o nome"
-            />
+          <div className="space-y-2">
+            <Label>Nome</Label>
+            <Input value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="age">Idade</Label>
+            <Label>Idade</Label>
             <Input
               type="number"
-              defaultValue={props.person?.age}
-              placeholder="Digite a idade"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
             />
           </div>
         </div>
 
         <DialogFooter>
-          <Button
-            className="flex px-2 py-1 bg-yellow-500 hover:bg-yellow-600 rounded transition hover:text-white"
-            onClick={() => props.onOpenChange(false)}
-          >
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
 
-          <Button
-            className="flex px-2 py-1 bg-green-500 hover:bg-green-600 rounded transition hover:text-white"
-            onClick={() => console.log("salvo")}
-          >
-            Salvar
+          <Button onClick={() => console.log({ name, age })}>
+            {isEditing ? "Salvar" : "Criar"}
           </Button>
         </DialogFooter>
       </DialogContent>
