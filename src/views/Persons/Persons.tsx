@@ -31,18 +31,18 @@ const Persons = () => {
           <h1 className="text-2xl font-bold text-gray-800">Pessoas</h1>
           <span className="text-gray-600">Lista de pessoas cadastradas</span>
         </div>
-      </div>
 
-      <div className="flex w-full justify-end">
-        <button
-          className="flex px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded hover:text-white transition"
-          onClick={() => {
-            setSelectedPerson(null);
-            setOpenPersonDialog(true);
-          }}
-        >
-          Nova Pessoa
-        </button>
+        <div className="flex justify-end">
+          <button
+            className="flex px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded hover:text-white transition"
+            onClick={() => {
+              setSelectedPerson(null);
+              setOpenPersonDialog(true);
+            }}
+          >
+            Nova Pessoa
+          </button>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
