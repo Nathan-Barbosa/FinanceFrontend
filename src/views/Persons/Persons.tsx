@@ -12,6 +12,7 @@ import {
 import { PersonsDialog } from "./components";
 import type { PersonsDTO } from "@/models/Persons";
 import { useGetPersonsQuery, useDeletePersonMutation } from "@/services";
+import { toast } from "sonner";
 
 const Persons = () => {
   const { data: persons, error } = useGetPersonsQuery();
@@ -134,9 +135,18 @@ const Persons = () => {
                 className="flex px-2 py-1 bg-red-500 hover:bg-red-600 rounded transition hover:text-white"
                 onClick={() => {
                   if (selectedPerson) {
-                    deleteMutation.mutate(String(selectedPerson.id));
-                    setDeletePersonDialog(false);
-                    setSelectedPerson(null);
+                    deleteMutation.mutate(String(selectedPerson.id), {
+                      onSuccess: () => {
+                        toast("Pessoa removida com sucesso!", {
+                          className: "!bg-destructive !text-white",
+                        });
+                        setDeletePersonDialog(false);
+                        setSelectedPerson(null);
+                      },
+                      onError: () => {
+                        toast.error("Erro ao excluir pessoa");
+                      },
+                    });
                   }
                 }}
                 disabled={deleteMutation.isPending}

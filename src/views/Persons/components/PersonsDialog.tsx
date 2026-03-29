@@ -18,10 +18,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { personSchema } from "../Persons.schemas";
 import type { PersonFormData } from "../Persons.types";
 import { usePostPersonQuery, usePutPersonQuery } from "@/services";
+import { toast } from "sonner";
 
 const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
   const isEditing = !!person;
-
   const form = useForm<PersonFormData>({
     resolver: zodResolver(personSchema),
     defaultValues: {
@@ -42,15 +42,32 @@ const PersonsDialog = ({ person, open, onOpenChange }: PersonsDialogProps) => {
 
   const onSubmit = (data: PersonFormData) => {
     if (isEditing && person) {
-      updateMutation.mutate({
-        id: String(person.id),
-        payload: data,
-      });
+      updateMutation.mutate(
+        {
+          id: String(person.id),
+          payload: data,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Pessoa atualizada com sucesso!");
+            onOpenChange(false);
+          },
+          onError: () => {
+            toast.error("Erro ao atualizar pessoa");
+          },
+        },
+      );
     } else {
-      createMutation.mutate(data);
+      createMutation.mutate(data, {
+        onSuccess: () => {
+          toast.success("Pessoa criada com sucesso!");
+          onOpenChange(false);
+        },
+        onError: () => {
+          toast.error("Erro ao criar pessoa");
+        },
+      });
     }
-
-    onOpenChange(false);
   };
 
   return (
