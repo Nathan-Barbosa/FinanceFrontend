@@ -1,6 +1,8 @@
 import { CategoryPurpose, CategoryPurposeLabel } from "@/constants";
 import type { CategoriesDTO } from "@/models";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { useState } from "react";
+import { CategoriesDialog } from "./components";
 
 const Categories = () => {
   const categories: CategoriesDTO[] = [
@@ -16,17 +18,21 @@ const Categories = () => {
     },
   ];
 
+  const [openCategoryDialog, setOpenCategoriesDialog] = useState(false);
+
   return (
     <div className="space-y-6 h-full w-full flex flex-col">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Caregorias</h1>
-          <span className="text-gray-600">Lista de pessoas cadastradas</span>
+          <span className="text-gray-600">Lista de categorias cadastradas</span>
         </div>
         <div className="flex justify-end">
           <button
             className="flex px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded hover:text-white transition"
-            onClick={() => console.log("abrir modal")}
+            onClick={() => {
+              setOpenCategoriesDialog(true);
+            }}
           >
             Adicionar categoria
           </button>
@@ -60,22 +66,6 @@ const Categories = () => {
                   <td className="px-4 py-2 text-gray-600">
                     {CategoryPurposeLabel[user.purpose]}
                   </td>
-                  <td className="px-4 py-2 text-gray-600">
-                    <div className="flex flex-wrap gap-2 justify-end">
-                      <button
-                        className="px-3 py-1 bg-green-400 rounded hover:bg-green-600 hover:text-white transition"
-                        onClick={() => console.log("editar categoria")}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="px-3 py-1 bg-red-400 rounded hover:bg-red-600 hover:text-white transition"
-                        onClick={() => console.log("excluir")}
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </td>
                 </tr>
               ))}
           </tbody>
@@ -94,6 +84,11 @@ const Categories = () => {
           </span>
         </div>
       )}
+
+      <CategoriesDialog
+        open={openCategoryDialog}
+        onOpenChange={setOpenCategoriesDialog}
+      />
     </div>
   );
 };
