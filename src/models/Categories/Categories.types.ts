@@ -1,7 +1,7 @@
-import type { CategoryPurpose } from "@/constants";
+import type { CATEGORY_PURPOSE } from "@/constants";
 
-type CategoryPurposeType =
-  (typeof CategoryPurpose)[keyof typeof CategoryPurpose];
+export type CategoryPurposeType =
+  (typeof CATEGORY_PURPOSE)[keyof typeof CATEGORY_PURPOSE]["value"];
 
 type CategoriesDTO = {
   id: string;
@@ -9,4 +9,6 @@ type CategoriesDTO = {
   purpose: CategoryPurposeType;
 };
 
-export type { CategoriesDTO, CategoryPurposeType };
+type GetCategoriesResponseDTO = CategoriesDTO;
+
+export type { CategoriesDTO, GetCategoriesResponseDTO };

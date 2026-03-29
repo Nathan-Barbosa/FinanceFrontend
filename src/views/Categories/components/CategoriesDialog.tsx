@@ -18,20 +18,48 @@ import type { CategoriesDialogProps } from "./CategoriesDialog.types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CategoryPurpose, CategoryPurposeLabel } from "@/constants";
+import { CATEGORY_PURPOSE } from "@/constants";
 import { Controller, useForm } from "react-hook-form";
 import type { CategoriesFormData } from "../Categories.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categorySchema } from "../Categories.schemas";
+import { usePostCategoryQuery } from "@/services/CategoriesService";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const CategoriesDialog = ({ open, onOpenChange }: CategoriesDialogProps) => {
+  const createCategoryMutation = usePostCategoryQuery();
+
   const form = useForm<CategoriesFormData>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       description: "",
-      purpose: undefined,
+      purpose: CATEGORY_PURPOSE.Expense.value,
     },
   });
+
+  const onSubmit = (data: CategoriesFormData) => {
+    createCategoryMutation.mutate(data, {
+      onSuccess: () => {
+        toast.success("Categoria criada com sucesso!");
+
+        form.reset();
+        onOpenChange(false);
+      },
+      onError: () => {
+        toast.error("Erro ao criar categoria");
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (open) {
+      form.reset({
+        description: "",
+        purpose: CATEGORY_PURPOSE.Expense.value,
+      });
+    }
+  }, [open, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -40,7 +68,7 @@ const CategoriesDialog = ({ open, onOpenChange }: CategoriesDialogProps) => {
           <DialogTitle>Cadastrar nova categoria</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit((data) => console.log(data))}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-2 flex flex-col py-2">
             <Label>Descrição</Label>
             <Input {...form.register("description")} />
@@ -58,9 +86,9 @@ const CategoriesDialog = ({ open, onOpenChange }: CategoriesDialogProps) => {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {Object.values(CategoryPurpose).map((value) => (
-                      <SelectItem key={value} value={value}>
-                        {CategoryPurposeLabel[value]}
+                    {Object.values(CATEGORY_PURPOSE).map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -80,6 +108,7 @@ const CategoriesDialog = ({ open, onOpenChange }: CategoriesDialogProps) => {
 
             <Button
               type="submit"
+              disabled={createCategoryMutation.isPending}
               className="flex px-2 py-1 bg-green-500 hover:bg-green-600 rounded transition hover:text-white"
             >
               Criar

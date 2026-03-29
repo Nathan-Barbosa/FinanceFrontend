@@ -1,15 +1,19 @@
-import type { CategoryPurposeType } from "@/models";
-
-const CategoryPurpose = {
-  Expense: "Expense",
-  Income: "Income",
-  Both: "Both",
+const CATEGORY_PURPOSE = {
+  Expense: {
+    value: "Expense",
+    label: "Despesa",
+    color: "text-red-500",
+  },
+  Income: {
+    value: "Income",
+    label: "Receita",
+    color: "text-green-500",
+  },
+  Both: {
+    value: "Both",
+    label: "Ambos",
+    color: "text-blue-500",
+  },
 } as const;
 
-export const CategoryPurposeLabel: Record<CategoryPurposeType, string> = {
-  Expense: "Despesa",
-  Income: "Receita",
-  Both: "Ambos",
-};
-
-export { CategoryPurpose };
+export { CATEGORY_PURPOSE };

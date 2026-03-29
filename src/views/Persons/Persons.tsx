@@ -15,8 +15,7 @@ import { useGetPersonsQuery, useDeletePersonMutation } from "@/services";
 import { toast } from "sonner";
 
 const Persons = () => {
-  const { data: persons, error } = useGetPersonsQuery();
-  console.log(error);
+  const { data: persons } = useGetPersonsQuery();
 
   const [openPersonDialog, setOpenPersonDialog] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<PersonsDTO | null>(null);
