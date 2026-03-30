@@ -1,73 +1,60 @@
-# React + TypeScript + Vite
+# FinancesApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação front-end para controle de gastos residenciais, consumindo a API FinancesAPI.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- TypeScript
+- Vite
+- React Hook Form
+- Zod
+- TanStack Query
+- ShadCN UI
+- Recharts
 
-## React Compiler
+## 📊 Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Cadastro de pessoas, categorias e transações
+- Dashboard com gráficos financeiros
+- Totais por pessoa
+- Totais por categoria
+- Integração completa com API
+- Atualização automática com React Query
 
-## Expanding the ESLint configuration
+## 🧠 Arquitetura
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Pages**: telas principais
+- **Components**: componentes reutilizáveis (tables, dialogs, charts)
+- **Services**: integração com API (React Query)
+- **Schemas**: validações com Zod
+- **Constants**: enums e configs globais
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ⚙️ Como executar
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- bash
+- git clone https://github.com/Nathan-Barbosa/FinanceFrontend.git
+- cd finances-app
+- npm install
+- npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📸 Prints da Aplicação
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🏠 Dashboard
+<p align="center"> <img src="src/assets/images/dashboard.png" width="800"/> </p>
+👤 Lista de Pessoas
+<p align="center"> <img src="src/assets/images/pessoas-lista.png" width="800"/> </p>
+➕ Criação de Pessoa
+<p align="center"> <img src="src/assets/images/modal-criacao-pessoas.png" width="600"/> </p>
+🗂️ Lista de Categorias
+<p align="center"> <img src="src/assets/images/categorias-lista.png" width="800"/> </p>
+➕ Criação de Categoria
+<p align="center"> <img src="src/assets/images/modal-criacao-categoria.png" width="600"/> </p>
+💰 Lista de Transações
+<p align="center"> <img src="src/assets/images/transacoes-lista.png" width="800"/> </p>
+➕ Criação de Transação
+<p align="center"> <img src="src/assets/images/modal-criacao-transações.png" width="600"/> </p>
+📊 Totais por Pessoa
+<p align="center"> <img src="src/assets/images/totais-pessoa-lista.png" width="800"/> </p>
+📊 Totais por Categoria
+<p align="center"> <img src="src/assets/images/totais-categoria-list.png" width="800"/> </p>
