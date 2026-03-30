@@ -53,8 +53,8 @@ Aplicação front-end para controle de gastos residenciais, consumindo a API Fin
 💰 Lista de Transações
 <p align="center"> <img src="src/assets/images/transacoes-lista.png" width="800"/> </p>
 ➕ Criação de Transação
-<p align="center"> <img src="src/assets/images/modal-criacao-transações.png" width="600"/> </p>
+<p align="center"> <img src="src/assets/images/modal-criacao-transacoes.png" width="600"/> </p>
 📊 Totais por Pessoa
 <p align="center"> <img src="src/assets/images/totais-pessoa-lista.png" width="800"/> </p>
 📊 Totais por Categoria
-<p align="center"> <img src="src/assets/images/totais-categoria-list.png" width="800"/> </p>
+<p align="center"> <img src="src/assets/images/totais-categoria-lista.png" width="800"/> </p>
