@@ -1,8 +1,22 @@
+import { TotalsTable } from "@/components";
 import { useGetCategoriesTotalsQuery } from "@/services";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 const CategoryTotals = () => {
   const { data } = useGetCategoriesTotalsQuery();
-  console.log(data);
+
+  const formattedData = {
+    items: (data?.categories ?? []).map((category) => ({
+      label: category.description,
+      totalIncome: category.totalIncome,
+      totalExpense: category.totalExpense,
+      balance: category.balance,
+    })),
+    totalIncome: data?.totalIncome ?? 0,
+    totalExpense: data?.totalExpense ?? 0,
+    balance: data?.balance ?? 0,
+  };
+
   return (
     <div className="space-y-6 w-full h-full flex flex-col">
       <div>
@@ -12,64 +26,22 @@ const CategoryTotals = () => {
         <span className="text-gray-500">Resumo financeiro por categoria</span>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-2 text-left">Categoria</th>
-              <th className="px-4 py-2 text-left">Receita</th>
-              <th className="px-4 py-2 text-left">Despesa</th>
-              <th className="px-4 py-2 text-left">Saldo</th>
-            </tr>
-          </thead>
+      {formattedData.items?.length > 0 && (
+        <TotalsTable data={formattedData} labelHeader="Categoria" />
+      )}
 
-          <tbody>
-            {data?.categories.map((category) => (
-              <tr key={category.description}>
-                <td className="px-4 py-2">{category.description}</td>
-
-                <td className="px-4 py-2 text-green-500">
-                  {category.totalIncome.toFixed(2)}
-                </td>
-
-                <td className="px-4 py-2 text-red-500">
-                  {category.totalExpense.toFixed(2)}
-                </td>
-
-                <td
-                  className={`px-4 py-2 ${
-                    category.balance >= 0 ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  {category.balance.toFixed(2)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-
-          <tfoot className="bg-gray-100 font-semibold">
-            <tr>
-              <td className="px-4 py-2">TOTAL</td>
-
-              <td className="px-4 py-2 text-green-700">
-                {data?.totalIncome.toFixed(2)}
-              </td>
-
-              <td className="px-4 py-2 text-red-700">
-                {data?.totalExpense.toFixed(2)}
-              </td>
-
-              <td
-                className={`px-4 py-2 ${
-                  data && data?.balance >= 0 ? "text-green-700" : "text-red-700"
-                }`}
-              >
-                {data?.balance.toFixed(2)}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+      {formattedData.items?.length === 0 && (
+        <div className="flex flex-col items-center justify-center top-1/2 text-center h-full w-full">
+          <MagnifyingGlassIcon
+            size={150}
+            weight="duotone"
+            className="text-gray-400"
+          />
+          <span className="mt-2 text-gray-600">
+            Nenhuma categoria cadastrada
+          </span>
+        </div>
+      )}
     </div>
   );
 };

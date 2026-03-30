@@ -1,7 +1,21 @@
+import { TotalsTable } from "@/components";
 import { useGetPersonsTotalsQuery } from "@/services";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 const PersonsTotals = () => {
   const { data } = useGetPersonsTotalsQuery();
+
+  const formattedData = {
+    items: (data?.persons ?? []).map((category) => ({
+      label: category.name,
+      totalIncome: category.totalIncome,
+      totalExpense: category.totalExpense,
+      balance: category.balance,
+    })),
+    totalIncome: data?.totalIncome ?? 0,
+    totalExpense: data?.totalExpense ?? 0,
+    balance: data?.balance ?? 0,
+  };
 
   return (
     <div className="space-y-6 w-full h-full flex flex-col">
@@ -10,72 +24,20 @@ const PersonsTotals = () => {
         <span className="text-gray-500">Resumo financeiro por pessoa</span>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold">
-                Nome
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-semibold">
-                Receita
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-semibold">
-                Despesa
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-semibold">
-                Saldo
-              </th>
-            </tr>
-          </thead>
+      {formattedData.items?.length > 0 && (
+        <TotalsTable data={formattedData} labelHeader="Pessoa" />
+      )}
 
-          <tbody className="bg-white divide-y divide-gray-200">
-            {data?.persons.map((person) => (
-              <tr key={person.name}>
-                <td className="px-4 py-2">{person.name}</td>
-
-                <td className="px-4 py-2 text-green-500 font-medium">
-                  R$ {person.totalIncome.toFixed(2)}
-                </td>
-
-                <td className="px-4 py-2 text-red-500 font-medium">
-                  R$ {person.totalExpense.toFixed(2)}
-                </td>
-
-                <td
-                  className={`px-4 py-2 font-semibold ${
-                    person.balance >= 0 ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  R$ {person.balance.toFixed(2)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-
-          <tfoot className="bg-gray-100 font-semibold">
-            <tr>
-              <td className="px-4 py-2">TOTAL</td>
-
-              <td className="px-4 py-2 text-green-700">
-                R$ {data?.totalIncome.toFixed(2)}
-              </td>
-
-              <td className="px-4 py-2 text-red-700">
-                R$ {data?.totalExpense.toFixed(2)}
-              </td>
-
-              <td
-                className={`px-4 py-2 ${
-                  data && data.balance >= 0 ? "text-green-700" : "text-red-700"
-                }`}
-              >
-                R$ {data?.balance.toFixed(2)}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+      {formattedData.items?.length === 0 && (
+        <div className="flex flex-col items-center justify-center top-1/2 text-center h-full w-full">
+          <MagnifyingGlassIcon
+            size={150}
+            weight="duotone"
+            className="text-gray-400"
+          />
+          <span className="mt-2 text-gray-600">Nenhuma pessoa cadastrada</span>
+        </div>
+      )}
     </div>
   );
 };
