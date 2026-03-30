@@ -13,7 +13,7 @@ const Categories = () => {
     <div className="space-y-6 h-full w-full flex flex-col">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Caregorias</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Categorias</h1>
           <span className="text-gray-600">Lista de categorias cadastradas</span>
         </div>
         <div className="flex justify-end">
