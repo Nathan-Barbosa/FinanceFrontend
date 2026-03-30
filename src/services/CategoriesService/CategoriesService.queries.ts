@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CategoriesService } from "./CatgoriesService";
-import type { PostCategoriesRequestDTO } from "./CatgoriesService.types";
+import { CategoriesService } from "./CategoriesService";
+import type { PostCategoriesRequestDTO } from "./CategoriesService.types";
 import type { GetCategoriesResponseDTO } from "@/models";
 
 const categoriesKeys = {
   all: ["categories"] as const,
   lists: () => [...categoriesKeys.all, "list"] as const,
-  create: () => [...categoriesKeys.all, "createPerson"] as const,
+  create: () => [...categoriesKeys.all, "createCategory"] as const,
 };
 
 const useGetCategoriesQuery = () => {

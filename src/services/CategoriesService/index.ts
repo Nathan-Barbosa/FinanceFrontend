@@ -1,3 +1,3 @@
-export * from "./CatgoriesService";
-export * from "./CatgoriesService.queries";
-export * from "./CatgoriesService.types";
+export * from "./CategoriesService";
+export * from "./CategoriesService.queries";
+export * from "./CategoriesService.types";

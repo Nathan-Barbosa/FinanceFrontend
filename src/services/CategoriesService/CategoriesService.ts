@@ -1,6 +1,6 @@
 import type { GetCategoriesResponseDTO } from "@/models";
 import { api } from "../api";
-import type { PostCategoriesRequestDTO } from "./CatgoriesService.types";
+import type { PostCategoriesRequestDTO } from "./CategoriesService.types";
 
 class CategoriesService {
   public static readonly url = "api/category";

@@ -1,5 +1,5 @@
 type PersonsDTO = {
-  id: number;
+  id: string;
   name: string;
   age: number;
 };
