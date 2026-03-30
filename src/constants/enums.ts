@@ -16,4 +16,12 @@ const CATEGORY_PURPOSE = {
   },
 } as const;
 
-export { CATEGORY_PURPOSE };
+const PIE_CHART_COLORS = ["#22c55e", "#ef4444"];
+
+const CHART_COLORS = {
+  positive: "#22c55e", // verde
+  negative: "#ef4444", // vermelho
+  neutral: "#3b82f6", // azul (saldo positivo opcional)
+};
+
+export { CATEGORY_PURPOSE, PIE_CHART_COLORS, CHART_COLORS };

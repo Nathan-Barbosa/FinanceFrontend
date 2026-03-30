@@ -2,7 +2,7 @@
 
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { BaseLayout } from "../layout";
-import { Home } from "@/views/Home";
+import { Dashboard } from "@/views/Dashboard";
 import { ROUTES } from "@/constants";
 import { CategoryTotals, Persons } from "@/views";
 import { Categories } from "@/views/Categories";
@@ -13,12 +13,12 @@ const routes = createBrowserRouter([
   {
     children: [
       {
-        path: ROUTES.HOME,
+        path: ROUTES.DASHBOARD,
         element: <BaseLayout />,
         children: [
           {
             index: true,
-            element: <Home />,
+            element: <Dashboard />,
           },
           {
             path: ROUTES.PERSONS,
@@ -46,7 +46,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to={ROUTES.HOME} replace />,
+    element: <Navigate to={ROUTES.DASHBOARD} replace />,
   },
 ]);
 

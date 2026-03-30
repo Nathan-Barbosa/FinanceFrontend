@@ -1,5 +1,5 @@
 const ROUTES = {
-  HOME: "/",
+  DASHBOARD: "/",
   PERSONS: "/pessoas",
   CATEGORIES: "/categorias",
   TRANSACTIONS: "/transações",

@@ -19,8 +19,8 @@ const Sidebar = () => {
 
   const navItems = [
     {
-      to: ROUTES.HOME,
-      label: "Home",
+      to: ROUTES.DASHBOARD,
+      label: "Dashboard",
       icon: <ChartBarIcon size={20} />,
     },
     {
