@@ -31,10 +31,19 @@ const usePostPersonQuery = () => {
   return useMutation<void, Error, PostPersonsRequestDTO>({
     mutationKey: personsKeys.create(),
     mutationFn: PersonService.createPerson,
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: personsKeys.lists(),
-      }),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: personsKeys.totals(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard"],
+      });
+    },
   });
 };
 
@@ -44,10 +53,19 @@ const usePutPersonQuery = () => {
   return useMutation<void, Error, UpdatePersonRequestDTO>({
     mutationKey: personsKeys.update(),
     mutationFn: ({ id, payload }) => PersonService.updatePerson(id, payload),
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: personsKeys.lists(),
-      }),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: personsKeys.totals(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
+    },
   });
 };
 
@@ -58,10 +76,23 @@ const useDeletePersonMutation = () => {
     mutationKey: personsKeys.delete(),
     mutationFn: PersonService.deletePerson,
 
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: personsKeys.lists(),
-      }),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: personsKeys.totals(),
+      });
+    },
   });
 };
 

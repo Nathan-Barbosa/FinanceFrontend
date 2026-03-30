@@ -22,10 +22,15 @@ const usePostTransactionsQuery = () => {
   return useMutation<void, Error, PostTransactionsRequestDTO>({
     mutationKey: transactionsKeys.create(),
     mutationFn: TransactionsService.createTransaction,
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: transactionsKeys.lists(),
-      }),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard"],
+      });
+    },
   });
 };
 

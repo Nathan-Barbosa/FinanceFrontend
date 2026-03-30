@@ -23,10 +23,19 @@ const usePostCategoryQuery = () => {
   return useMutation<void, Error, PostCategoriesRequestDTO>({
     mutationKey: categoriesKeys.create(),
     mutationFn: CategoriesService.createCategory,
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: categoriesKeys.lists(),
-      }),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: categoriesKeys.categoryTotals(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard"],
+      });
+    },
   });
 };
 
