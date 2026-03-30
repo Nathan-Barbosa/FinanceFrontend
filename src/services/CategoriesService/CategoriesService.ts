@@ -1,4 +1,7 @@
-import type { GetCategoriesResponseDTO } from "@/models";
+import type {
+  CategoryTotalsResponseDTO,
+  GetCategoriesResponseDTO,
+} from "@/models";
 import { api } from "../api";
 import type { PostCategoriesRequestDTO } from "./CategoriesService.types";
 
@@ -16,6 +19,13 @@ class CategoriesService {
     payload: PostCategoriesRequestDTO,
   ): Promise<void> {
     await api.post(CategoriesService.url, payload);
+  }
+
+  public static async getCategoryTotals(): Promise<CategoryTotalsResponseDTO> {
+    const { data } = await api.get<CategoryTotalsResponseDTO>(
+      `${CategoriesService.url}/totals`,
+    );
+    return data;
   }
 }
 

@@ -11,4 +11,23 @@ type CategoriesDTO = {
 
 type GetCategoriesResponseDTO = CategoriesDTO;
 
-export type { CategoriesDTO, GetCategoriesResponseDTO };
+type CategoryTotalsDTO = {
+  description: string;
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
+};
+
+type CategoryTotalsResponseDTO = {
+  categories: CategoryTotalsDTO[];
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
+};
+
+export type {
+  CategoriesDTO,
+  GetCategoriesResponseDTO,
+  CategoryTotalsResponseDTO,
+  CategoryTotalsDTO,
+};

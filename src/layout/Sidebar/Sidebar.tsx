@@ -2,6 +2,7 @@ import { ROUTES } from "@/constants";
 import { NavLink } from "react-router-dom";
 import {
   CaretLeftIcon,
+  CashRegisterIcon,
   ChartBarIcon,
   CreditCardIcon,
   ListIcon,
@@ -41,6 +42,11 @@ const Sidebar = () => {
       to: ROUTES.PERSONSTOTALS,
       label: "Saldo",
       icon: <ScalesIcon size={20} />,
+    },
+    {
+      to: ROUTES.CATEGORYTOTALS,
+      label: "Sumário",
+      icon: <CashRegisterIcon size={20} />,
     },
   ];
 

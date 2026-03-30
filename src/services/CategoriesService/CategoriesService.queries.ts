@@ -7,6 +7,7 @@ const categoriesKeys = {
   all: ["categories"] as const,
   lists: () => [...categoriesKeys.all, "list"] as const,
   create: () => [...categoriesKeys.all, "createCategory"] as const,
+  categoryTotals: () => [...categoriesKeys.all, "categoryTotals"] as const,
 };
 
 const useGetCategoriesQuery = () => {
@@ -29,4 +30,15 @@ const usePostCategoryQuery = () => {
   });
 };
 
-export { useGetCategoriesQuery, usePostCategoryQuery };
+const useGetCategoriesTotalsQuery = () => {
+  return useQuery({
+    queryKey: categoriesKeys.categoryTotals(),
+    queryFn: CategoriesService.getCategoryTotals,
+  });
+};
+
+export {
+  useGetCategoriesQuery,
+  usePostCategoryQuery,
+  useGetCategoriesTotalsQuery,
+};
