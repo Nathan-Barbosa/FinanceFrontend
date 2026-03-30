@@ -1,4 +1,7 @@
-import type { GetPersonsResponseDTO } from "@/models/Persons";
+import type {
+  GetPersonsResponseDTO,
+  GetTotalsResponseDTO,
+} from "@/models/Persons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PersonService } from "./PersonsService";
 import type {
@@ -12,6 +15,7 @@ const personsKeys = {
   create: () => [...personsKeys.all, "createPerson"] as const,
   update: () => [...personsKeys.all, "updatePerson"] as const,
   delete: () => [...personsKeys.all, "deletePerson"] as const,
+  totals: () => [...personsKeys.all, "totals"] as const,
 };
 
 const useGetPersonsQuery = () => {
@@ -61,9 +65,17 @@ const useDeletePersonMutation = () => {
   });
 };
 
+const useGetPersonsTotalsQuery = () => {
+  return useQuery<GetTotalsResponseDTO>({
+    queryKey: personsKeys.totals(),
+    queryFn: PersonService.getTotals,
+  });
+};
+
 export {
   useGetPersonsQuery,
   usePostPersonQuery,
   usePutPersonQuery,
   useDeletePersonMutation,
+  useGetPersonsTotalsQuery,
 };

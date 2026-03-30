@@ -6,4 +6,23 @@ type PersonsDTO = {
 
 type GetPersonsResponseDTO = PersonsDTO;
 
-export type { PersonsDTO, GetPersonsResponseDTO };
+type PersonTotalsDTO = {
+  name: string;
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
+};
+
+type GetTotalsResponseDTO = {
+  persons: PersonTotalsDTO[];
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
+};
+
+export type {
+  PersonsDTO,
+  GetPersonsResponseDTO,
+  PersonTotalsDTO,
+  GetTotalsResponseDTO,
+};

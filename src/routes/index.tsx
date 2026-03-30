@@ -7,6 +7,7 @@ import { ROUTES } from "@/constants";
 import { Persons } from "@/views";
 import { Categories } from "@/views/Categories";
 import { Transactions } from "@/views/Transactions";
+import { PersonsTotals } from "@/views/PersonsTotals";
 
 const routes = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const routes = createBrowserRouter([
           {
             path: ROUTES.TRANSACTIONS,
             element: <Transactions />,
+          },
+          {
+            path: ROUTES.PERSONSTOTALS,
+            element: <PersonsTotals />,
           },
         ],
       },

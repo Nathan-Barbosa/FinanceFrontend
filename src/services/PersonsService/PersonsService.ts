@@ -1,4 +1,7 @@
-import type { GetPersonsResponseDTO } from "@/models/Persons";
+import type {
+  GetPersonsResponseDTO,
+  GetTotalsResponseDTO,
+} from "@/models/Persons";
 import { api } from "../api";
 import type { PostPersonsRequestDTO } from "./PersonsService.types";
 
@@ -25,6 +28,13 @@ class PersonService {
 
   public static async deletePerson(id: string): Promise<void> {
     await api.delete(`${PersonService.url}/${id}`);
+  }
+
+  public static async getTotals(): Promise<GetTotalsResponseDTO> {
+    const { data } = await api.get<GetTotalsResponseDTO>(
+      `${PersonService.url}/totals`,
+    );
+    return data;
   }
 }
 

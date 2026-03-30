@@ -6,6 +6,7 @@ import {
   CreditCardIcon,
   ListIcon,
   PersonIcon,
+  ScalesIcon,
   WalletIcon,
 } from "@phosphor-icons/react";
 import imglogo from "../../assets/finances-logo.png";
@@ -35,6 +36,11 @@ const Sidebar = () => {
       to: ROUTES.TRANSACTIONS,
       label: "Transações",
       icon: <CreditCardIcon size={20} />,
+    },
+    {
+      to: ROUTES.PERSONSTOTALS,
+      label: "Saldo",
+      icon: <ScalesIcon size={20} />,
     },
   ];
 

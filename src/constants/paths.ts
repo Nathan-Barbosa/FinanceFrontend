@@ -1,8 +1,9 @@
 const ROUTES = {
   HOME: "/",
-  PERSONS: "/persons",
+  PERSONS: "/pessoas",
   CATEGORIES: "/categorias",
   TRANSACTIONS: "/transações",
+  PERSONSTOTALS: "/saldo",
 };
 
 export { ROUTES };
